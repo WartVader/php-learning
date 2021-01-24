@@ -38,7 +38,7 @@
     <?php endif;?>
     <?php foreach($tasks as $task): ?>
         <?php if($show_complete_tasks || !$task["is_complete"]): ?>
-            <tr class="tasks__item task <?php if($task["is_complete"] == true): ?> task--completed <?php endif;?> ">
+            <tr class="tasks__item task <?php if(!isMoreOrЕquivalent24hours($task["date"])): ?> task--important <?php endif;?> <?php if($task["is_complete"] == true): ?> task--completed <?php endif;?> ">
                 <td class="task__select">
                     <label class="checkbox task__checkbox">
                         <input class="checkbox__input visually-hidden" type="checkbox" <?php if($task["is_complete"] == true): ?> checked <?php endif;?>>

@@ -8,6 +8,15 @@ function countSpecification(array $tasks, string $category){
     }
     return $count;
 }
+function isMoreOrЕquivalent24hours(string $date){
+    $date = strtotime($date);
+    if($date == 0){
+        return false;
+    }
+    $diff = $date - strtotime('now');
+    $diff = floor($diff/(60*60));
+    return $diff >= 24;
+}
 // показывать или нет выполненные задачи
 $show_complete_tasks = rand(0, 1);
 $projects = array("Входящие", "Учеба", "Работа", "Домашние дела", "Авто");
@@ -38,7 +47,7 @@ $tasks = [
     ],
     [
         'name' => "Купить корм для кота",
-        'date' => "Нет",
+        'date' => "26.01.2021",
         'category' => "Домашние дела",
         'is_complete' => false,
     ],
@@ -50,6 +59,11 @@ $tasks = [
     ],
 ];
 $title = "Название страницы";
+foreach($tasks as $task){
+    $time = strtotime($task['date']);
+    $task['date'] = date('Y-m-d', $time);
+    var_dump( isMoreOrЕquivalent24hours($task['date']));
+} // перезаписываем дату в другом формате
 $main = include_template('index.php', ["tasks" => $tasks, "projects" => $projects, 'show_complete_tasks' => $show_complete_tasks]);
 $menu = include_template('left-menu.php', ["tasks" => $tasks, "projects" => $projects]);
 print(include_template("layout.php", ['title' => $title, 'main' => $main, 'menu' => $menu]));
