@@ -10,8 +10,8 @@ function countSpecification(array $tasks, string $category){
 }
 function isMoreOrЕquivalent24hours(string $date){
     $date = strtotime($date);
-    if($date == 0){
-        return false;
+    if ($date == 0){
+        return true;
     }
     $diff = $date - strtotime('now');
     $diff = floor($diff/(60*60));
