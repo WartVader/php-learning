@@ -37,15 +37,15 @@
         </tr>
     <?php endif;?>
     <?php foreach($tasks as $task): ?>
-        <?php if($show_complete_tasks || !$task["is_complete"]): ?>
-            <tr class="tasks__item task <?php if(!isMoreOrЕquivalent24hours($task["date"])): ?> task--important <?php endif;?> <?php if($task["is_complete"] == true): ?> task--completed <?php endif;?> ">
+        <?php if($show_complete_tasks || !$task["status"]): ?>
+            <tr class="tasks__item task <?php if( !isMoreOrЕquivalent24hours($task["deadline"]) ): ?> task--important <?php endif;?> <?php if( $task["status"] == true ): ?> task--completed <?php endif;?> ">
                 <td class="task__select">
                     <label class="checkbox task__checkbox">
-                        <input class="checkbox__input visually-hidden" type="checkbox" <?php if($task["is_complete"] == true): ?> checked <?php endif;?>>
-                        <span class="checkbox__text"><?= htmlspecialchars($task["name"]); ?></span>
+                        <input class="checkbox__input visually-hidden" type="checkbox" <?php if( $task["status"] == true ): ?> checked <?php endif;?>>
+                        <span class="checkbox__text"><?= htmlspecialchars( $task["name"] ); ?></span>
                     </label>
                 </td>
-                <td class="task__date"><?= htmlspecialchars($task["date"]); ?></td>
+                <td class="task__date"><?= htmlspecialchars( $task["deadline"] ); ?></td>
                 <td class="task__controls"></td>
             </tr>
         <?php endif;?>
