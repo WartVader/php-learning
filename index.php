@@ -1,12 +1,10 @@
 <?php
 include("helpers.php");
 
-
 $url = ((!empty($_SERVER['HTTPS'])) ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
 $url = explode('?', $url);
 $url = $url[0];
 $uri = $_SERVER['REQUEST_URI'];
-
 //var_dump(((!empty($_SERVER['HTTPS'])) ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
 //var_dump($_SERVER);
 
@@ -47,6 +45,8 @@ function isMoreOrЕquivalent24hours($date)
 
 // показывать или нет выполненные задачи
 $show_complete_tasks = rand(0, 1);
+
+
 /*$projects = array("Входящие", "Учеба", "Работа", "Домашние дела", "Авто");
 $tasks = [
     [
@@ -86,24 +86,41 @@ $tasks = [
         'is_complete' => false,
     ],
 ];*/
+
 $title = "Название страницы";
 $menu = include_template('left-menu.php', ["tasks" => $tasks, "projects" => $projects, 'url' => $url]);
 if (count($tasks) == 0) {
-	$main = include_template('404.php', ["tassks" => $tasks, "projects" => $projects, 'show_complete_tasks' => $show_complete_tasks]);
+	$main = include_template('404.php', ["tasks" => $tasks, "projects" => $projects, 'show_complete_tasks' => $show_complete_tasks]);
 	$title = 404;
 } else {
 	if ($uri == '/') {
 		$main = include_template('index.php', ["tasks" => $tasks, "projects" => $projects, 'show_complete_tasks' => $show_complete_tasks]);
 	} else if ($uri == '/form-task') {
+		var_dump(headers_list());
 		$main = include_template('form-task.php', ["tasks" => $tasks, "projects" => $projects, 'show_complete_tasks' => $show_complete_tasks]);
 	} else if ($_POST) {
+		include_once(substr($uri, 1).'.php');
 		$array = explode('/', $_SERVER['HTTP_REFERER']);
 		$refer = $array[array_key_last($array)];
-		var_dump('Location:'.$refer);
-		print(include_template("layout.php", ['title' => $title, 'main' => "<br>", 'menu' => $menu]));
-		header('Location: '.$_SERVER['HTTP_REFERER']);
+		//var_dump($_POST);
+		//var_dump($_SERVER);
 		//exit();
-		http_redirect($_SERVER['HTTP_REFERER']);
+		//var_dump('Location:'.$refer);
+		var_dump(json_encode($validation));
+		//exit();
+		/*
+		 * TODO: Я сделал уже валидацию, осталось только понять как передать какие данные валидировались а какие нет
+		 *
+		 * */
+		header('SomeName: 123');
+		var_dump(headers_list());
+		//exit();
+		header('Location: '.$_SERVER['HTTP_REFERER']);
+
+		print(include_template("layout.php", ['title' => $title, 'main' => "<br>", 'menu' => $menu]));
+
+		//exit();
+		//http_redirect($_SERVER['HTTP_REFERER']);
 		//http_redirect(((!empty($_SERVER['HTTPS'])) ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST']);
 	} else {
 		$main = include_template('404.php', ["tassks" => $tasks, "projects" => $projects, 'show_complete_tasks' => $show_complete_tasks]);
@@ -111,4 +128,5 @@ if (count($tasks) == 0) {
 		$title = 404;
 	}
 }
+$menu = include_template('left-menu.php', ["tasks" => $tasks, "projects" => $projects, 'url' => $url]);
 print(include_template("layout.php", ['title' => $title, 'main' => $main, 'menu' => $menu]));

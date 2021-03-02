@@ -1,24 +1,20 @@
 <?php
 
-include("index.php");
-
-function validation($data, $whatToValidate)
+function validation($whatToValidate)
 {
-	$validated = false;
-	$dateValidate = ["form-project",];
-	$projectsValidate = ["form-project",];
-	if ($whatToValidate === "date" || in_array($whatToValidate, $dateValidate)) {
-		$validated = $validated || (preg_match("^\d{4}\-(0[1-9]|1[012])\-(0[1-9]|[12][0-9]|3[01])$", $data) && strtotime($data) >= strtotime('now'));
-	}
-	if ($whatToValidate === "projects" || in_array($whatToValidate, $projectsValidate)) {
-		global $projects;
-		$validated = $validated || isInArray($projects, 'id', $data);
-	}
-	return $validated;
-}
+	global $projects;
+	$validation = false;
 
-var_dump($projects);
+	if ($whatToValidate === "form-task") {
+		$validation['date'] = (preg_match("/^\d{4}\-(0[1-9]|1[012])\-(0[1-9]|[12][0-9]|3[01])$/", $_POST['date']) && strtotime($_POST['date']) >= strtotime('now'));
+		$validation['project'] = isInArray($projects, 'id', $_POST['project']);
+	}
 
-if ($_POST['project'] || $_POST['name'] || $_POST['date'] || $_POST['file']) {
-	validataion();
+	return $validation;
 }
+//
+//var_dump($_POST);
+
+$validation = validation("form-task");
+
+//var_dump($validated);
