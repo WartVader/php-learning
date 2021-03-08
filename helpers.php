@@ -1,4 +1,34 @@
 <?php
+$url = ((!empty($_SERVER['HTTPS'])) ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+$url = explode('?', $url);
+$url = $url[0];
+$uri = $_SERVER['REQUEST_URI'];
+
+
+function isInArray($array, $key, $needle)
+{
+	foreach ($array as $item) {
+		if (isset($item[$key])) {
+			if ($item[$key] === $needle) {
+				return true;
+			}
+		}
+	}
+	return false;
+}
+
+function isMoreOrЕquivalent24hours($date)
+{
+	$date = strtotime($date);
+	if ($date == 0) {
+		return true;
+	}
+	$diff = $date - strtotime('now');
+	$diff = floor($diff / (60 * 60));
+	return $diff >= 24;
+}
+
+
 
 /**
  * Проверяет переданную дату на соответствие формату 'ГГГГ-ММ-ДД'
