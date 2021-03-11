@@ -1,4 +1,5 @@
 <?php
+session_start();
 
 include("helpers.php");
 include("sql.php");
@@ -8,13 +9,13 @@ $title = "Регистрация";
 function validation() {
 	global $connect;
 	$validation = [];
-	$sql = "SELECT * FROM users WHERE email = ".$_POST['email'];
+	$sql = "SELECT * FROM users WHERE email = '${_POST['email']}'";
 	$emails = mysqli_query($connect, $sql);
 	if (!empty($_POST['email']) && !empty($_POST['name']) && !empty($_POST['password'])) {
 		if (!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
 			$validation['email'] = "E-mail введен не корректно";
 		} else if ($emails){
-			$validation['email'] = "Введеенный E-mail уже зарегистрирован";
+			$validation['email'] = "Введенный E-mail уже зарегистрирован";
 		}
 	} else {
 		empty($_POST['email']) ? $validation['email'] = 'Вы не ввели почту' : false;
@@ -22,7 +23,7 @@ function validation() {
 		empty($_POST['name']) ? $validation['name'] = 'Вы не ввели имя' : false;
 	}
 
-	var_dump($validation);
+	//var_dump($validation);
 	return $validation;
 }
 

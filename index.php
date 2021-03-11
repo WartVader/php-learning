@@ -1,4 +1,6 @@
 <?php
+session_start();
+
 include("helpers.php");
 include("sql.php");
 
