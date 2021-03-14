@@ -13,40 +13,39 @@ function auth(){
 	$result = mysqli_query($connect, $sql);
 
 	$user = mysqli_fetch_assoc($result);
-	var_dump($sql);
-	var_dump($user);
+	if($user === null) {
+		return false;
+	}
+
 	if (password_verify($_POST['password'], $user['password'])) {
 		$_SESSION['id'] = $user['id'];
 		$_SESSION['id'] = $user['date_reg'];
 		$_SESSION['name'] = $user['name'];
-		var_dump("Типо вошел");
 	}
 
 
 	//var_dump($validation);
-	return $auth;
+	return true;
 }
 
 $errors = [];
+var_dump((empty($_POST['email']) || empty($_POST['password'])));
 if($_POST) {
-	$errors = auth();
-	/*$email = $_POST['email'];
-	$password = password_hash($_POST['password'], PASSWORD_DEFAULT);
-	$name = $_POST['name'];
-	$dateReg = date('Y-m-d H:i:s', strtotime('now'));
-	if ($errors == []) {
-		$sql = "INSERT INTO users (email, name, password, date_reg)
-				VALUES ('$email', '$name', '$password', '$dateReg')";
-		$result = mysqli_query($connect, $sql);
-		var_dump($result);
-		if ($result === TRUE) {
-			header('Location: index.php');
-		} else {
-			echo "Error:" . mysqli_error($connect);
+	if((empty($_POST['email']) || empty($_POST['password'])) == false) {
+		if (auth() == false) {
+			$errors['all'] = 'Почта или пароль были введены не верно, или такого аккаунта не существует';
 		}
-	}*/
+		else {
+			header("Location: index.php");
+		}
+	}
+	else {
+		empty($_POST['email']) ? $errors['email'] = 'Вы не ввели почту' : false;
+		empty($_POST['password']) ? $errors['password'] = 'Вы не ввели пароль' : false;
+	}
 }
 
-$main = include_template('auth.php', ['errors' => $errors]);
+
+$main = include_template('auth.php', ['errors' => $errors, 'values' => $_POST]);
 $menu = include_template('left-menu.php', ["tasks" => $tasks, "projects" => $projects, 'url' => $url]);
 print(include_template("layout.php", ['title' => $title, 'main' => $main]));

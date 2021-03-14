@@ -4,6 +4,9 @@ session_start();
 include("helpers.php");
 include("sql.php");
 
+if(!isset($_SESSION['name'])) {
+	header("Location: guest.php");
+}
 
 //var_dump(((!empty($_SERVER['HTTPS'])) ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
 //var_dump($_SERVER);
