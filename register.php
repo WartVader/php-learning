@@ -48,5 +48,5 @@ if($_POST) {
 }
 
 $main = include_template('register.php', ["tasks" => $tasks, "projects" => $projects, "errors" => $errors, "values" => $_POST]);
-$menu = include_template('left-menu.php', ["tasks" => $tasks, "projects" => $projects, 'url' => $url]);
+$menu = include_template('left-menu.php', ["tasks" => $tasks, "projects" => $projects]);
 print(include_template("layout.php", ['title' => $title, 'main' => $main, 'menu' => $menu]));

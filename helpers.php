@@ -5,6 +5,14 @@ $url = $url[0];
 $uri = $_SERVER['REQUEST_URI'];
 
 
+/*function isNotSet($keys, $array) {
+	$result = [];
+	foreach($keys as $key) {
+		isset($array[$key]) ? null : $result[$key];
+	}
+	return $result;
+}*/
+
 function isInArray($array, $key, $needle)
 {
 	foreach ($array as $item) {

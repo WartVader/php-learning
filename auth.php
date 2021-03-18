@@ -18,8 +18,8 @@ function auth(){
 	}
 
 	if (password_verify($_POST['password'], $user['password'])) {
-		$_SESSION['id'] = $user['id'];
-		$_SESSION['id'] = $user['date_reg'];
+		$_SESSION['user_id'] = $user['id'];
+		$_SESSION['date_reg'] = $user['date_reg'];
 		$_SESSION['name'] = $user['name'];
 	}
 
@@ -47,5 +47,5 @@ if($_POST) {
 
 
 $main = include_template('auth.php', ['errors' => $errors, 'values' => $_POST]);
-$menu = include_template('left-menu.php', ["tasks" => $tasks, "projects" => $projects, 'url' => $url]);
+$menu = include_template('left-menu.php', ["tasks" => $tasks, "projects" => $projects]);
 print(include_template("layout.php", ['title' => $title, 'main' => $main]));

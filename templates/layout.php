@@ -21,7 +21,7 @@
 
             <div class="main-header__side">
 				<?php if(isset($_SESSION['name'])):?>
-					<a class="main-header__side-item button button--plus open-modal" href="pages/form-task.html">Добавить задачу</a>
+					<a class="main-header__side-item button button--plus open-modal" href="/add.php?form=task">Добавить задачу</a>
 
 					<div class="main-header__side-item user-menu">
 						<div class="user-menu__data">
@@ -57,7 +57,7 @@
         </div>
 
 		<?php if(isset($_SESSION['name'])):?>
-        <a class="main-footer__button button button--plus" href="/form-task.php">Добавить задачу</a>
+        <a class="main-footer__button button button--plus" href="/add.php?form=task">Добавить задачу</a>
 		<?php endif; ?>
         <div class="main-footer__social social">
             <span class="visually-hidden">Мы в соцсетях:</span>

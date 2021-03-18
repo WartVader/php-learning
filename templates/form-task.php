@@ -1,11 +1,12 @@
 
 <h2 class="content__main-heading">Добавление задачи</h2>
 
-<form class="form" action="add.php" method="post" autocomplete="off" enctype="multipart/form-data">
+<form class="form" action="<?= $_SERVER['REQUEST_URI'] ?>" method="post" autocomplete="off" enctype="multipart/form-data">
     <div class="form__row">
         <label class="form__label" for="name">Название <sup>*</sup></label>
 
-        <input class="form__input" type="text" name="name" id="name" value="<?php if(isset($values['name'])): ?><?= $values['name']; ?><?php endif;?>" placeholder="Введите название">
+        <input class="form__input <?php if(isset($errors['name'])): ?>form__input--error<?php endif;?>" type="text" name="name" id="name" value="<?php if(isset($values['name'])): ?><?= $values['name']; ?><?php endif;?>" placeholder="Введите название">
+		<?php if(isset($errors['name'])): ?> <p class="form__message"> <?= $errors['name']; ?> </p> <?php endif; ?>
     </div>
 
     <div class="form__row">
@@ -16,13 +17,15 @@
                 <option <?php if(isset($values['project']) && $project['id'] == $values['project']): ?>selected<?php endif;?> value="<?= $project['id'] ?>"><?= htmlspecialchars($project['name']); ?></option>
             <?php endforeach;?>
         </select>
+		<?php if(isset($errors['project'])): ?> <p class="form__message"> <?= $errors['project']; ?> </p> <?php endif; ?>
     </div>
 
     <div class="form__row">
-        <label class="form__label" for="date">Дата выполнения</label>
+        <label class="form__label <?php if(isset($errors['date'])): ?>form__input--error<?php endif;?>" for="date">Дата выполнения</label>
 
         <input class="form__input form__input--date <?php if(isset($errors['date'])): ?>form__input--error<?php endif;?>" type="text" name="date" id="date" value="<?php if(isset($values['date'])): ?><?= $values['date']; ?><?php endif;?>"
                placeholder="Введите дату в формате ГГГГ-ММ-ДД">
+		<?php if(isset($errors['date'])): ?> <p class="form__message"> <?= $errors['date']; ?> </p> <?php endif; ?>
     </div>
 
     <div class="form__row">

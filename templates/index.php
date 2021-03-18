@@ -15,14 +15,14 @@
     </nav>
 
     <label class="checkbox">
-        <!--добавить сюда атрибут "checked", если переменная $show_complete_tasks равна единице-->
-        <input class="checkbox__input visually-hidden show_completed" type="checkbox" <?php if($show_complete_tasks == true): ?> checked <?php endif;?>>
+        <!--добавить сюда атрибут "checked", если переменная $showCompleteTasks равна единице-->
+        <input class="checkbox__input visually-hidden show_completed" type="checkbox" <?php if($showCompleteTasks == true): ?> checked <?php endif;?>>
         <span class="checkbox__text">Показывать выполненные</span>
     </label>
 </div>
 
 <table class="tasks">
-    <?php if($show_complete_tasks == true): ?>
+    <?php if($showCompleteTasks == true): ?>
         <tr class="tasks__item task task--completed">
             <td class="task__select">
                 <label class="checkbox task__checkbox">
@@ -35,11 +35,11 @@
         </tr>
     <?php endif;?>
     <?php foreach($tasks as $task): ?>
-        <?php if($show_complete_tasks || !$task["status"]): ?>
+        <?php if($showCompleteTasks || !$task["status"]): ?>
             <tr class="tasks__item task <?php if( !isMoreOrЕquivalent24hours($task["deadline"]) ): ?> task--important <?php endif;?> <?php if( $task["status"] == true ): ?> task--completed <?php endif;?> ">
                 <td class="task__select">
                     <label class="checkbox task__checkbox">
-                        <input class="checkbox__input visually-hidden" type="checkbox" <?php if( $task["status"] == true ): ?> checked <?php endif;?>>
+                        <input class="checkbox__input visually-hidden task__checkbox" type="checkbox" <?php if( $task["status"] == true ): ?> checked <?php endif;?> value="<?= $task['id'] ?>">
                         <span class="checkbox__text"><?= htmlspecialchars( $task["name"] ); ?></span>
                     </label>
                 </td>
@@ -62,5 +62,5 @@
 
         <td class="task__date"></td>
     </tr>
-    <!--показывать следующий тег <tr/>, если переменная $show_complete_tasks равна единице-->
+    <!--показывать следующий тег <tr/>, если переменная $showCompleteTasks равна единице-->
 </table>
