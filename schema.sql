@@ -38,3 +38,4 @@ create index i_name on doingsdone.projects(name);
 create unique index i_id on doingsdone.users(id);
 create unique index i_id on doingsdone.tasks(id);
 create unique index i_id on doingsdone.projects(id);
+create fulltext index task_search on doingsdone.tasks(name);
