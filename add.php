@@ -21,7 +21,7 @@ function validation()
 	empty($_POST["name"]) ? $validation['error']['name'] = 'Поле не заполнено' : null;
 	if ($_GET['form'] == 'task') {
 		empty($_POST["project"]) ? $validation['error']['project'] = 'Поле не заполнено' : null;
-		if(isset( $validation['error'])) {
+		if (isset($validation['error'])) {
 			return $validation;
 		}
 
@@ -85,12 +85,22 @@ if ($_POST) {
 	if (!isset($validation['error']) && in_array($_GET['form'], $availableAddForm)) {
 		$name = mysqli_real_escape_string($connect, $_POST['name']);
 		$userId = $_SESSION['user_id'];
-		if($_GET['form'] == 'task') {
-			$projId = mysqli_real_escape_string($connect, $_POST['project']) ;
+		if ($_GET['form'] == 'task') {
+			$projId = mysqli_real_escape_string($connect, $_POST['project']);
 			$date = !empty($_POST['date']) ? $_POST['date'] : date("Y-m-d H:i:s", strtotime('now + 7 days'));
-			$file = !empty($_POST['file']) ? "'" . $_POST['file'] . "'" : 'NULL';
-			var_dump($_POST);
-			var_dump($_FILES);
+			$file = 'NULL';
+			if (!empty($_FILES['file']['name'])) {
+				var_dump($_POST);
+				var_dump($_FILES);
+				$savePath = SAVE_DIR . 'user-' . hash('md5', $_SESSION['name'] . $_SESSION['user_id']);
+				var_dump($savePath);
+				if (!file_exists($savePath)) {
+					mkdir($savePath);
+				}
+				$savePath = $savePath . '/' . $_FILES['file']['name'];
+				move_uploaded_file($_FILES['file']['tmp_name'], $savePath);
+				$file =  "'${savePath}'";
+			}
 		}
 
 		if ($_GET['form'] == 'project') {
