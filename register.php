@@ -13,7 +13,6 @@ function validation() {
 	$emails = mysqli_query($connect, $sql);
 
 	if (!empty($_POST['email']) && !empty($_POST['name']) && !empty($_POST['password'])) {
-	    //TODO: ломается валидация емайла
 		if (!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
 			$validation['email'] = "E-mail введен не корректно";
         } else if ($emails->num_rows !== 0){
