@@ -8,10 +8,10 @@
 
 <div class="tasks-controls">
     <nav class="tasks-switch">
-        <a href="/" class="tasks-switch__item tasks-switch__item--active">Все задачи</a>
-        <a href="/" class="tasks-switch__item">Повестка дня</a>
-        <a href="/" class="tasks-switch__item">Завтра</a>
-        <a href="/" class="tasks-switch__item">Просроченные</a>
+        <a href="index.php" class="tasks-switch__item <?php if(!isset($_GET['filter'])): ?> tasks-switch__item--active<?php endif; ?>">Все задачи</a>
+        <a href="index.php?filter=today" class="tasks-switch__item <?php if(isset($_GET['filter']) && $_GET['filter'] == 'today'): ?> tasks-switch__item--active<?php endif; ?>">Повестка дня</a>
+        <a href="index.php?filter=tomorrow" class="tasks-switch__item <?php if(isset($_GET['filter']) && $_GET['filter'] == 'tomorrow'): ?> tasks-switch__item--active<?php endif; ?>">Завтра</a>
+        <a href="index.php?filter=overdue" class="tasks-switch__item <?php if(isset($_GET['filter']) && $_GET['filter'] == 'overdue'): ?> tasks-switch__item--active<?php endif; ?>">Просроченные</a>
     </nav>
 
     <label class="checkbox">
@@ -36,7 +36,7 @@
     <?php endif;?>
     <?php foreach($tasks as $task): ?>
         <?php if($showCompleteTasks || !$task["status"]): ?>
-            <tr class="tasks__item task <?php if( !isMoreOrЕquivalent24hours($task["deadline"]) ): ?> task--important <?php endif;?> <?php if( $task["status"] == true ): ?> task--completed <?php endif;?> ">
+            <tr class="tasks__item task <?php if( !isMoreOrEquivalent24hours($task["deadline"]) ): ?> task--important <?php endif;?> <?php if( $task["status"] == true ): ?> task--completed <?php endif;?> ">
                 <td class="task__select">
                     <label class="checkbox task__checkbox">
                         <input class="checkbox__input visually-hidden task__checkbox" type="checkbox" <?php if( $task["status"] == true ): ?> checked <?php endif;?> value="<?= $task['id'] ?>">
