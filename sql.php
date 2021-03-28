@@ -24,7 +24,7 @@ if (isset($_SESSION['user_id'])) {
             $filter = "AND DATEDIFF(deadline, '$filterDate') < 0";
         }
     }
-    $sql_projects = "SELECT COUNT(t.id) AS count, p.id, p.name  FROM projects p LEFT JOIN users u ON u.id = p.user_id LEFT JOIN tasks t ON t.proj_id = p.id WHERE p.user_id = " . $_SESSION['user_id'] . " GROUP BY p.id";
+	$sql_projects = "SELECT COUNT(t.id) AS count, p.id, p.name  FROM projects p LEFT JOIN users u ON u.id = p.user_id LEFT JOIN tasks t ON t.proj_id = p.id WHERE p.user_id = " . $_SESSION['user_id'] . " GROUP BY p.id";
 
     if (isset($_GET['search']) && !empty($_GET['search']) && trim($_GET['search'], ' ') != '') {
         $sql_tasks = "SELECT *, DATE_FORMAT(tasks.deadline, '%d.%m.%Y') FROM tasks WHERE MATCH (name) AGAINST('${_GET['search']}*' IN BOOLEAN MODE) $filter";

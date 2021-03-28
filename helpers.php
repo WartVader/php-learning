@@ -16,7 +16,15 @@ $uri = $_SERVER['REQUEST_URI'];
 	return $result;
 }*/
 
-function isInArray($array, $key, $needle)
+/**
+ * Функция проверяет находится ли $needle в ассоциативном массиве по ключу
+ *
+ * @param $array
+ * @param $key
+ * @param $needle
+ * @return bool
+ */
+function isInArray($array, $key, $needle): bool
 {
 	foreach ($array as $item) {
 		if (isset($item[$key])) {
@@ -28,7 +36,11 @@ function isInArray($array, $key, $needle)
 	return false;
 }
 
-function isMoreOrЕquivalent24hours($date)
+/**
+ * @param string|null $date
+ * @return bool
+ */
+function isMoreOrEquivalent24hours(?string $date): bool
 {
 	$date = strtotime($date);
 	if ($date == 0) {

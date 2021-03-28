@@ -11,10 +11,11 @@ function validation() {
 	$validation = [];
 	$sql = "SELECT * FROM users WHERE email = '${_POST['email']}'";
 	$emails = mysqli_query($connect, $sql);
+
 	if (!empty($_POST['email']) && !empty($_POST['name']) && !empty($_POST['password'])) {
 		if (!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
 			$validation['email'] = "E-mail введен не корректно";
-		} else if ($emails->lengths !== NULL){
+		} else if ($emails->num_rows !== 0){
 			$validation['email'] = "Введенный E-mail уже зарегистрирован";
 		}
 	} else {
@@ -23,7 +24,6 @@ function validation() {
 		empty($_POST['name']) ? $validation['name'] = 'Вы не ввели имя' : false;
 	}
 
-	//var_dump($validation);
 	return $validation;
 }
 
@@ -40,7 +40,7 @@ if($_POST) {
 		$result = mysqli_query($connect, $sql);
 		var_dump($result);
 		if ($result === TRUE) {
-			header('Location: index.php');
+			header('Location: auth.php');
 		} else {
 			echo "Error:" . mysqli_error($connect);
 		}
@@ -48,5 +48,4 @@ if($_POST) {
 }
 
 $main = include_template('register.php', ["tasks" => $tasks, "projects" => $projects, "errors" => $errors, "values" => $_POST]);
-$menu = include_template('left-menu.php', ["tasks" => $tasks, "projects" => $projects]);
-print(include_template("layout.php", ['title' => $title, 'main' => $main, 'menu' => $menu]));
+print(include_template("layout.php", ['title' => $title, 'main' => $main]));

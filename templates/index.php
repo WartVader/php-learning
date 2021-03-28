@@ -36,7 +36,7 @@
     <?php endif;?>
     <?php foreach($tasks as $task): ?>
         <?php if($showCompleteTasks || !$task["status"]): ?>
-            <tr class="tasks__item task <?php if( !isMoreOrЕquivalent24hours($task["deadline"]) ): ?> task--important <?php endif;?> <?php if( $task["status"] == true ): ?> task--completed <?php endif;?> ">
+            <tr class="tasks__item task <?php if( !isMoreOrEquivalent24hours($task["deadline"]) ): ?> task--important <?php endif;?> <?php if( $task["status"] == true ): ?> task--completed <?php endif;?> ">
                 <td class="task__select">
                     <label class="checkbox task__checkbox">
                         <input class="checkbox__input visually-hidden task__checkbox" type="checkbox" <?php if( $task["status"] == true ): ?> checked <?php endif;?> value="<?= $task['id'] ?>">
