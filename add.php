@@ -11,7 +11,6 @@ if (!isset($_SESSION['name'])) {
 function validation()
 {
 	global $projects;
-	var_dump($projects);
 	$validation = true;
 
 	$validateName = true;
@@ -26,7 +25,7 @@ function validation()
 		}
 
 		if (!empty($_POST["date"])) {
-			$validateDate = (is_date_valid($_POST['date']) && strtotime($_POST['date']) >= strtotime('now'));
+			$validateDate = (is_date_valid($_POST['date']) && $_POST['date'] >= date('Y-m-d'));
 		}
 		if (!empty($_POST["project"])) {
 			$validateProject = isInArray($projects, 'id', $_POST['project']);

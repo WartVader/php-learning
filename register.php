@@ -14,7 +14,7 @@ function validation() {
 	if (!empty($_POST['email']) && !empty($_POST['name']) && !empty($_POST['password'])) {
 		if (!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
 			$validation['email'] = "E-mail введен не корректно";
-		} else if ($emails){
+		} else if ($emails->lengths !== NULL){
 			$validation['email'] = "Введенный E-mail уже зарегистрирован";
 		}
 	} else {
