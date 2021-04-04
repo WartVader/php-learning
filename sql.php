@@ -3,10 +3,15 @@ $connect = mysqli_connect('localhost', 'homestead', 'secret', 'doingsdone', 3306
 $tasks = [];
 $projects = [];
 
-function getAllRows($sql, $justOne = false): array
+function getAllRows($sql, $justOne = false)
 {
     global $connect;
     $result = mysqli_query($connect, $sql);
+    if ($result === false) {
+        return false;
+    }
+    //var_dump($result);
+    //var_dump($sql);
     return $justOne ? mysqli_fetch_assoc($result) : mysqli_fetch_all($result, MYSQLI_ASSOC);
 }
 
